@@ -22,6 +22,17 @@ public class AST {
 		if(node == null) {
 			return new ASTNode(value);
 		}
+		
+		if(node.getSymbol().equals("-")){
+			node.setSymbol("-"+value);
+			return node;
+		}
+		
+		
+		if(value.equals("-")) {
+			node.setRight(insert(node.getRight(), value));
+			return node;
+		}
 		if(value.chars().allMatch(Character::isDigit)) {
 		
 			node.setRight(insert(node.getRight(), value));
@@ -30,6 +41,14 @@ public class AST {
 		}		
 		
 		if(value.equals("+")) {
+			if(node.getSymbol().contains("-")) {
+				ASTNode sumNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL neg: "+value);
+				sumNode.setLeft(node);
+				return sumNode;
+			}
+			
+			
 			if(node.getSymbol().chars().allMatch(Character::isDigit)) {
 				ASTNode sumNode = new ASTNode(value);
 				System.out.println("SUM SYMBOL1: "+value);
@@ -66,6 +85,12 @@ public class AST {
 				System.out.println("MULT SYMBOL2: "+value);
 				return sumNode;
 			}
+			if(node.getSymbol().contains("-")) {
+				ASTNode sumNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL neg: "+value);
+				sumNode.setLeft(node);
+				return sumNode;
+			}
 		}
 		
 		return node;
@@ -78,8 +103,9 @@ public class AST {
 	
 	public void printTree(ASTNode node) {
 		if(node!=null) {
-			printTree(node.getLeft());
 			System.out.println(node.getSymbol());
+			printTree(node.getLeft());
+			
 			printTree(node.getRight());
 		}
 	}
@@ -87,7 +113,7 @@ public class AST {
 	
 	public static void main(String[] args) {
 		
-		String n = "3*8+9*1";
+		String n = "3*8+-9*1";
 		char[] m = n.toCharArray();
 		
 		AST tree = new AST();
@@ -99,7 +125,7 @@ public class AST {
 		System.out.println("----------------------------------------------");
 		System.out.println(tree.nodeRoot.getSymbol());
 		System.out.println(tree.nodeRoot.getLeft().getSymbol());
-		System.out.println(tree.nodeRoot.getRight().getSymbol());
+		System.out.println(tree.nodeRoot.getRight().getRight().getSymbol());
 		System.out.println("----------------------------------------------");
 		tree.printTree(tree.nodeRoot);
 		
