@@ -38,7 +38,29 @@ public class AST {
 			node.setRight(insert(node.getRight(), value));
 			System.out.println("NUMBER: "+value);
 				
-		}		
+		}
+		
+		
+		if(value.equals("^")){
+			if(node.getSymbol().contains("-")) {
+				ASTNode expNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL neg: "+value);
+				expNode.setLeft(node);
+				return expNode;
+			}
+			if(node.getSymbol().chars().allMatch(Character::isDigit)) {
+				ASTNode expNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL neg: "+value);
+				expNode.setLeft(node);
+				return expNode;
+			}
+			else {
+			node.setRight(insert(node.getRight(), value));
+			return node;
+			}
+			
+		}
+		
 		
 		if(value.equals("+")) {
 			if(node.getSymbol().contains("-")) {
@@ -48,6 +70,12 @@ public class AST {
 				return sumNode;
 			}
 			
+			if(node.getSymbol().contains("^")) {
+				ASTNode sumNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL exp: "+value);
+				sumNode.setLeft(node);
+				return sumNode;
+			}
 			
 			if(node.getSymbol().chars().allMatch(Character::isDigit)) {
 				ASTNode sumNode = new ASTNode(value);
@@ -91,6 +119,12 @@ public class AST {
 				sumNode.setLeft(node);
 				return sumNode;
 			}
+			if(node.getSymbol().contains("^")) {
+				ASTNode sumNode = new ASTNode(value);
+				System.out.println("SUM SYMBOL exp: "+value);
+				sumNode.setLeft(node);
+				return sumNode;
+			}
 		}
 		
 		return node;
@@ -101,19 +135,20 @@ public class AST {
 		nodeRoot = insert(nodeRoot, value);
 	}
 	
-	public void printTree(ASTNode node) {
+	public void printTree(ASTNode node, int count) {
 		if(node!=null) {
-			System.out.println(node.getSymbol());
-			printTree(node.getLeft());
+			System.out.println(node.getSymbol()+" Level: "+ count);
+			count ++;
+			printTree(node.getLeft(), count);
 			
-			printTree(node.getRight());
+			printTree(node.getRight(), count);
 		}
 	}
 
 	
 	public static void main(String[] args) {
 		
-		String n = "3*8+-9*1";
+		String n = "3*8+-9^2*1";
 		char[] m = n.toCharArray();
 		
 		AST tree = new AST();
@@ -122,14 +157,45 @@ public class AST {
 			tree.AddRoot(String.valueOf(ch));
 		}
 		
+		int count = 0;
+		
 		System.out.println("----------------------------------------------");
 		System.out.println(tree.nodeRoot.getSymbol());
 		System.out.println(tree.nodeRoot.getLeft().getSymbol());
 		System.out.println(tree.nodeRoot.getRight().getRight().getSymbol());
 		System.out.println("----------------------------------------------");
-		tree.printTree(tree.nodeRoot);
-		
-		
+		System.out.println("----------------------------------------------Prueba 1------------------");
+		tree.printTree(tree.nodeRoot, count);
+		System.out.println("----------------------------------------------Prueba 2------------------");
+		n = "2+3*4";
+		m = n.toCharArray();
+		tree = new AST();
+		for(char ch: m) {
+			System.out.print(ch);
+			tree.AddRoot(String.valueOf(ch));
+		}
+		count=0;
+		tree.printTree(tree.nodeRoot, count);
+		System.out.println("----------------------------------------------Prueba 3------------------");
+		n = "-2+3*-4+6*2*0";
+		m = n.toCharArray();
+		tree = new AST();
+		for(char ch: m) {
+			System.out.print(ch);
+			tree.AddRoot(String.valueOf(ch));
+		}
+		count=0;
+		tree.printTree(tree.nodeRoot, count);
+		System.out.println("----------------------------------------------Prueba 4------------------");
+		n = "3*8+9*10";
+		m = n.toCharArray();
+		tree = new AST();
+		for(char ch: m) {
+			System.out.print(ch);
+			tree.AddRoot(String.valueOf(ch));
+		}
+		count=0;
+		tree.printTree(tree.nodeRoot, count);
 	}
 
 }
