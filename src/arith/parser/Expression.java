@@ -1,16 +1,19 @@
 package arith.parser;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+
+import com.sun.tools.javac.util.List;
 
 public class Expression {
 
 	
-	public final HashSet<String> symbols  = new HashSet<>();
-	public final HashSet<String> numbs  = new HashSet<>();
+	public final ArrayList<String> symbols  = new ArrayList<String>() ;
+	public final ArrayList<String> numbs  = new ArrayList<String>();
 
 	
-	public HashSet<String> getSymbols() {
+	public ArrayList<String> getSymbols() {
 		return symbols;
 	}
 	
@@ -20,8 +23,8 @@ public class Expression {
 		return this;
 	}
 
-	public HashSet<String> getNumbs() {
-		return symbols;
+	public ArrayList<String> getNumbs() {
+		return numbs;
 	}
 	
 	

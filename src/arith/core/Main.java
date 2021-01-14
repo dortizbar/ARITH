@@ -19,7 +19,7 @@ public class Main {
 		
 		
 		
-		String input = "-2 + 3 * -4 + 6 * 2 * 0";
+		String input = "-2 + 3 * -40 + 6 * 2 * 0";
 		ParsingResult<?> result = new RecoveringParseRunner<Expression>(parser.InputLine()).run(input);
 		
 		
