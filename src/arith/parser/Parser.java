@@ -10,15 +10,19 @@ public class Parser extends BaseParser<Expression>{
 	Expression input = new Expression();
 	
 	public Rule Expression() {
-		return Sequence(OneOrMore(symbolNum()), AnyOf("+*^"));
+		return Sequence(symbolNum(),ZeroOrMore(Operation(),symbolNum()));
+		
+		
+		//Sequence(ZeroOrMore(' '),symbolNum(),OneOrMore(' '),OneOrMore( ZeroOrMore(' '),AnyOf("+*^"),OneOrMore(' '), symbolNum()),  push(input.symbol(match())));
+	
 	}
 	
 	public Rule InputLine() {
-		return Sequence(Expression(), EOI);
+		return Sequence(Expression(), EOI, push(input));
 	}
 	
-	public Rule Sum() {
-		return Ch('+');
+	public Rule Operation() {
+		return Sequence(ZeroOrMore(' '),AnyOf("+*^"),push(input.symbol(match())),ZeroOrMore(' '));
 	}
 	public Rule Mult() {
 		return Ch('*');
@@ -31,8 +35,19 @@ public class Parser extends BaseParser<Expression>{
 	}
 	//test on ending
 	public Rule symbolNum() {
-		return Sequence(ZeroOrMore('-'), OneOrMore(num()), OneOrMore(' ') );
+		return Sequence(ZeroOrMore(' '),ZeroOrMore('-'),push(input.numb(match())), OneOrMore(num()),push(input.numb(match())));
 	}
+	
+	//Taken for parboiled example
+	Rule WhiteSpace() {
+	        return ZeroOrMore(AnyOf(" \t\f"));
+	    }
+	 @Override
+	    protected Rule fromStringLiteral(String string) {
+	        return string.endsWith(" ") ?
+	                Sequence(String(string.substring(0, string.length() - 1)), WhiteSpace()) :
+	                String(string);
+	    }
 	
 	
 	
