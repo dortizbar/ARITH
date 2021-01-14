@@ -1,4 +1,4 @@
-package arith.interpreter;
+package arith.tree;
 
 public class ASTNode {
 	

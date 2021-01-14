@@ -1,5 +1,6 @@
-package arith.interpreter;
+package arith.tree;
 
+import java.util.ArrayList;
 
 public class AST {
 	
@@ -15,6 +16,13 @@ public class AST {
 
 	public void setNodeRoot(ASTNode nodeRoot) {
 		this.nodeRoot = nodeRoot;
+	}
+	
+	public void assembleTree(ArrayList<String> symbols) {
+		
+		for(String sym: symbols) {
+			AddRoot(sym);
+		}
 	}
 
 	public ASTNode insert(ASTNode node, String value) {

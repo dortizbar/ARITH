@@ -7,6 +7,7 @@ import static org.parboiled.errors.ErrorUtils.printParseErrors;
 
 import arith.parser.Expression;
 import arith.parser.Parser;
+import arith.tree.AST;
 
 public class Main {
 
@@ -18,8 +19,8 @@ public class Main {
 		Parser parser = Parboiled.createParser(Parser.class);
 		
 		
-		
-		String input = "-2 + 3 * -40 + 6 * 2 * 0";
+						
+		String input = "3 * 8 + 9 * 10";
 		ParsingResult<?> result = new RecoveringParseRunner<Expression>(parser.InputLine()).run(input);
 		
 		
@@ -29,14 +30,21 @@ public class Main {
 		if (result.hasErrors()) {
             System.out.println("\nParse Errors:\n" + printParseErrors(result));
         }
-		System.out.println("symbol "+ exp.symbols.toArray().length);
-		for(String num:exp.symbols) {
-			System.out.println(num +"position");
-		}
 		
-		System.out.println("numb "+ exp.numbs.toArray().length);
+		
+	/*	System.out.println("numb "+ exp.numbs.toArray().length);
 		for(String num:exp.numbs) {
-			System.out.println(num +"position");
+			System.out.print("position");
 		}
+	**/	
+		AST tree = new AST();
+		tree.assembleTree(exp.symbols);
+		tree.printTree(tree.getNodeRoot(), 0);
+		
+		Interpreter inter = new Interpreter();
+		int res = inter.eval(tree);
+		System.out.println(res);
 	}
+	
+	
 }

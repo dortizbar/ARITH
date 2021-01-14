@@ -19,7 +19,10 @@ public class Expression {
 	
 	
 	public Expression symbol(final String sym) {
-		symbols.add(sym);
+		if(!sym.isBlank()) {
+			symbols.add(sym);
+		}
+		
 		return this;
 	}
 
@@ -29,7 +32,10 @@ public class Expression {
 	
 	
 	public Expression numb(final String num) {
-		numbs.add(num);
+		if(!num.isBlank()) {
+			numbs.add(num);
+		}
+		
 		return this;
 	}
 	

@@ -35,7 +35,7 @@ public class Parser extends BaseParser<Expression>{
 	}
 	//test on ending
 	public Rule symbolNum() {
-		return Sequence(ZeroOrMore(' '),ZeroOrMore('-'),push(input.numb(match())), OneOrMore(num()),push(input.numb(match())));
+		return Sequence(ZeroOrMore(' '),ZeroOrMore('-'),push(input.symbol(match())), OneOrMore(num()),push(input.symbol(match())));
 	}
 	
 	//Taken for parboiled example
