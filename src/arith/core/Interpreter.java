@@ -12,6 +12,7 @@ public class Interpreter {
 		if(nodeType.getSymbol().contains("-")) {
 			return Integer.parseInt(nodeType.getSymbol());
 		}
+		
 		if(nodeType.getSymbol().chars().allMatch(Character::isDigit)) {
 			return Integer.parseInt(nodeType.getSymbol());
 		}
@@ -44,6 +45,7 @@ public class Interpreter {
 			return (left*right);
 		}
 		
+	
 		return 0;
 		
 	}

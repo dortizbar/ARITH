@@ -4,12 +4,15 @@ import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
 
+
+@SuppressWarnings(value = { "all" })
 @BuildParseTree
 public class Parser extends BaseParser<Expression>{
 
 	Expression input = new Expression();
 	
 	public Rule Expression() {
+		//System.out.println("Expresion parser");
 		return Sequence(symbolNum(),ZeroOrMore(Operation(),symbolNum()));
 		
 		

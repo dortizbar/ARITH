@@ -2,10 +2,10 @@ package arith.parser;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
-import com.sun.tools.javac.util.List;
 
+
+@SuppressWarnings(value = { "all" })
 public class Expression {
 
 	
@@ -19,7 +19,7 @@ public class Expression {
 	
 	
 	public Expression symbol(final String sym) {
-		if(!sym.isBlank()) {
+		if(sym.length() !=0) {
 			symbols.add(sym);
 		}
 		
@@ -32,7 +32,7 @@ public class Expression {
 	
 	
 	public Expression numb(final String num) {
-		if(!num.isBlank()) {
+		if(num.length() != 0) {
 			numbs.add(num);
 		}
 		
