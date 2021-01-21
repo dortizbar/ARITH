@@ -42,7 +42,11 @@ public class Interpreter {
 			ASTNode n2 = nodeType.getRight();
 			tree.setNodeRoot(n2);
 			int right = eval(tree);
-			return (left*right);
+			int ans = 1;
+			for(int i= 1; i<=right;i++) {
+				ans*=left;
+			}
+			return (ans);
 		}
 		
 	

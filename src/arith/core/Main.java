@@ -1,10 +1,6 @@
 package arith.core;
 
-import org.parboiled.Parboiled;
-import org.parboiled.parserunners.RecoveringParseRunner;
-import org.parboiled.parserunners.ReportingParseRunner;
-import org.parboiled.support.ParsingResult;
-import static org.parboiled.errors.ErrorUtils.printParseErrors;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +8,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import org.parboiled.Parboiled;
+import org.parboiled.parserunners.ReportingParseRunner;
+import org.parboiled.support.ParsingResult;
 
 import arith.parser.Expression;
 import arith.parser.Parser;
@@ -29,49 +29,56 @@ public class Main {
 		
 		Parser parser = Parboiled.createParser(Parser.class);
 		
-		
 		ParsingResult<Expression> result = new ReportingParseRunner<Expression>(parser.InputLine()).run(input);
-		//System.out.println("Punto Despues Parser");
+		
 		Expression exp = (Expression) result.resultValue;
-		//System.out.println("Punto expr");
-	
-	//	if (result.hasErrors()) {
-    //        System.out.println("\nParse Errors:\n" + printParseErrors(result));
-    //    }
-	
+		
 		AST tree = new AST();
 		
 		tree.assembleTree(exp.symbols);
-		//System.out.println("Ensamblado");
+		
 		
 		Interpreter inter = new Interpreter();
 		int res = inter.eval(tree);
-		//System.out.println("Evaluado");
 		
 		return res;
 		
 	}
+	
+	public void testIf(String test) {
+		Parser parser = Parboiled.createParser(Parser.class);
+		
+		ParsingResult<Expression> result = new ReportingParseRunner<Expression>(parser.InputLine()).run(test);
+		
+		Expression exp = (Expression) result.resultValue;
+		
+		System.out.print(exp.symbols.size());
+		for(int i = 0; i< exp.symbols.size(); i++) {
+			System.out.print(exp.symbols.get(i));
+			
+		}
+	}
 	public static void main(String[] args) {
 		
+			String test= "x := ( a + 1 )";
+			Main m = new Main();
+			m.testIf(test);
+			
+/*
 			Main m = new Main();
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			String inputString = new String();
-			//inputString = "afuera try";
-			try { //inputString = "en try";
-				//System.out.println(br.readLine() + inputString);
+			
+			try { 
 				inputString = br.readLine();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 			
-
-			
 			int operationTotal = m.result(inputString);
 			System.out.println(operationTotal);
-		
-				
-		
+	*/	
 	}
 	
 	
